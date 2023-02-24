@@ -2,8 +2,8 @@
 
 Endpoints:
 
-- GET - https://ym2rzsu3va.execute-api.eu-central-1.amazonaws.com/dev/products
-- GET - https://ym2rzsu3va.execute-api.eu-central-1.amazonaws.com/dev/products/{productId}
+- GET - https://9hhpsvckda.execute-api.eu-central-1.amazonaws.com/dev/products
+- GET - https://9hhpsvckda.execute-api.eu-central-1.amazonaws.com/dev/products/{productId}
 
 ## Test service locally
 
