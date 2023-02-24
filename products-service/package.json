@@ -1,0 +1,36 @@
+{
+  "name": "products-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "serverless.ts",
+  "scripts": {
+    "deploy": "sls deploy",
+    "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i",
+    "invoke:getProductsList": "sls invoke local -f getProductsList",
+    "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"7567ec4b-b10c-48c5-9345-fc73c48a80a1\"}}'"
+  },
+  "engines": {
+    "node": ">=14.15.0"
+  },
+  "dependencies": {
+    "@middy/core": "^4.2.5",
+    "@middy/http-json-body-parser": "^4.2.5",
+    "aws-lambda": "^1.0.7",
+    "yup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@serverless/typescript": "^3.27.0",
+    "@types/aws-lambda": "^8.10.111",
+    "@types/node": "^18.14.1",
+    "esbuild": "^0.17.10",
+    "json-schema-to-ts": "^2.7.2",
+    "npm-check-updates": "^16.7.9",
+    "serverless": "^3.27.0",
+    "serverless-esbuild": "^1.39.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.2",
+    "typescript": "^4.9.5"
+  },
+  "author": "",
+  "license": ""
+}
