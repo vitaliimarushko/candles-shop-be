@@ -18,6 +18,9 @@ module.exports = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
+      AWS_REGION: "eu-central-1",
+      PRODUCTS_TABLE_NAME: "products",
+      STOCKS_TABLE_NAME: "stocks",
     },
   },
   // import the function via paths

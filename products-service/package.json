@@ -7,7 +7,7 @@
     "deploy": "sls deploy",
     "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i",
     "invoke:getProductsList": "sls invoke local -f getProductsList",
-    "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"7567ec4b-b10c-48c5-9345-fc73c48a80a1\"}}'"
+    "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"251c4dc1-7a08-4c65-85a2-f3632362cdbf\"}}'"
   },
   "engines": {
     "node": ">=14.15.0"
@@ -16,6 +16,7 @@
     "@middy/core": "^4.2.5",
     "@middy/http-json-body-parser": "^4.2.5",
     "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1324.0",
     "yup": "^1.0.0"
   },
   "devDependencies": {
