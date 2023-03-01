@@ -1,27 +1,8 @@
-import * as AWS from "aws-sdk";
-import { Product } from "../models/Product";
+import { Product } from "../../../models/Product";
+import { dynamoDbClient } from "../connection";
 
 const productsTableName = process.env.PRODUCTS_TABLE_NAME || "products";
 const stocksTableName = process.env.STOCKS_TABLE_NAME || "stocks";
-
-AWS.config.credentials = new AWS.SharedIniFileCredentials({
-  profile: "default",
-});
-
-const dynamoDbClient = new AWS.DynamoDB.DocumentClient();
-
-/**
- * Retrieves all the existing products from "products" table
- *
- * @returns { Promise<Product[]> }
- */
-export const getAllProducts = async (): Promise<Product[]> => {
-  const results = await dynamoDbClient
-    .scan({ TableName: productsTableName })
-    .promise();
-
-  return results?.Items || [];
-};
 
 /**
  * Retrieves a product by product ID value from "products" and "stocks" tables
@@ -58,15 +39,3 @@ export const getProductById = async (id: string): Promise<Product | null> => {
     ...stocksResult?.Item,
   };
 };
-
-/**
- * Inserts a new item into the "products" table
- *
- * @param { Product } product
- */
-// export const insertProduct = async (product: Product) => {
-//   await dynamoDbClient.put({
-//     TableName: productsTableName,
-//     Item: product,
-//   });
-// };
