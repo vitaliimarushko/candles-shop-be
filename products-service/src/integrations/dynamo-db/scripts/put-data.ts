@@ -1,6 +1,6 @@
-import { cleanAllData } from "./functions/clean-all-data";
-import { insertProduct } from "./functions/insert-product";
-import { baseProducts } from "./seeds/base-products";
+import { cleanAllData } from "../functions/clean-all-data";
+import { insertProduct } from "../functions/insert-product";
+import { baseProducts } from "../seeds/base-products";
 
 (async () => {
   await cleanAllData();

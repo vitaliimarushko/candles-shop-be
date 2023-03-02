@@ -48,29 +48,38 @@ export const cleanAllData = async (): Promise<void> => {
     getAllItems(stocksTableName),
   ]);
 
+  const transactionItems = [
+    ...productsItems.map((item: any) =>
+      prepareTransactionItem({
+        item,
+        tableName: productsTableName,
+        partitionKey: "id",
+        sortKey: "title",
+      }),
+    ),
+    ...stocksItems.map((item: any) =>
+      prepareTransactionItem({
+        item,
+        tableName: stocksTableName,
+        partitionKey: "product_id",
+      }),
+    ),
+  ];
+
+  if (!transactionItems.length) {
+    console.info(
+      `>>> There is nothing to delete from "${productsTableName}" and "${stocksTableName}" tables`,
+    );
+    return;
+  }
+
   await dynamoDbClient
     .transactWrite({
-      TransactItems: [
-        ...productsItems.map((item: any) =>
-          prepareTransactionItem({
-            item,
-            tableName: productsTableName,
-            partitionKey: "id",
-            sortKey: "title",
-          }),
-        ),
-        ...stocksItems.map((item: any) =>
-          prepareTransactionItem({
-            item,
-            tableName: stocksTableName,
-            partitionKey: "product_id",
-          }),
-        ),
-      ],
+      TransactItems: transactionItems,
     })
     .promise();
 
   console.info(
-    `>>> All items were successfully removed from "${productsTableName}" and "${stocksTableName}" table`,
+    `>>> All items were successfully removed from "${productsTableName}" and "${stocksTableName}" tables`,
   );
 };

@@ -5,7 +5,8 @@
   "main": "serverless.ts",
   "scripts": {
     "deploy": "sls deploy",
-    "migrate": "ts-node ./src/integrations/dynamo-db/migration.ts",
+    "migrate:create": "ts-node src/integrations/dynamo-db/scripts/create-tables.ts",
+    "migrate:put": "ts-node src/integrations/dynamo-db/scripts/put-data.ts",
     "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i",
     "invoke:getProductsList": "sls invoke local -f getProductsList",
     "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"f2e8da78-fa9d-4981-acf5-d4dc0741d881\"}}'",
