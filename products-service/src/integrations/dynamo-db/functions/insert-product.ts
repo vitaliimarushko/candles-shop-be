@@ -19,7 +19,7 @@ export const insertProduct = async (product: FullProduct): Promise<void> => {
               id: product.id,
               title: product.title,
               description: product.description,
-              price: product.price,
+              price: product.price || 0,
             },
             TableName: productsTableName,
           },
@@ -28,7 +28,7 @@ export const insertProduct = async (product: FullProduct): Promise<void> => {
           Put: {
             Item: {
               product_id: product.id,
-              count: product.count,
+              count: product.count || 0,
             },
             TableName: stocksTableName,
           },
