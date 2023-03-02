@@ -1,17 +1,43 @@
-import { Product } from "../../../models/Product";
-import { dynamoDbClient } from "../connection";
+import { FullProduct } from "../models/FullProduct";
+import { dynamoDbClient, dynamoDbConfigs } from "../connection";
 
-const productsTableName = process.env.PRODUCTS_TABLE_NAME || "products";
-// const stocksTableName = process.env.STOCKS_TABLE_NAME || "stocks";
+const { productsTableName, stocksTableName } = dynamoDbConfigs;
 
 /**
  * Inserts a new item into the "products" table
  *
- * @param { Product } product
+ * @param { FullProduct } product
+ * @returns { void }
  */
-export const insertProduct = async (product: Product) => {
-  await dynamoDbClient.put({
-    TableName: productsTableName,
-    Item: product,
-  });
+export const insertProduct = async (product: FullProduct): Promise<void> => {
+  await dynamoDbClient
+    .transactWrite({
+      TransactItems: [
+        {
+          Put: {
+            Item: {
+              id: product.id,
+              title: product.title,
+              description: product.description,
+              price: product.price,
+            },
+            TableName: productsTableName,
+          },
+        },
+        {
+          Put: {
+            Item: {
+              product_id: product.id,
+              count: product.count,
+            },
+            TableName: stocksTableName,
+          },
+        },
+      ],
+    })
+    .promise();
+
+  console.log(
+    `>>> New item with "${product.id}" product ID was successfully inserted to the DB`,
+  );
 };

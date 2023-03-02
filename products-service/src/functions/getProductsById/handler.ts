@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
-import { Product } from "../../models/Product";
+import { Product } from "../../integrations/dynamo-db/models/Product";
 import { pathParametersSchema } from "@functions/getProductsById/schema";
 import { handlerTryCatch } from "@libs/handler-try-catch";
 import { jsonResponse } from "@libs/json-response";

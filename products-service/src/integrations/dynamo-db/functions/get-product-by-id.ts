@@ -1,8 +1,7 @@
-import { Product } from "../../../models/Product";
-import { dynamoDbClient } from "../connection";
+import { Product } from "../models/Product";
+import { dynamoDbClient, dynamoDbConfigs } from "../connection";
 
-const productsTableName = process.env.PRODUCTS_TABLE_NAME || "products";
-const stocksTableName = process.env.STOCKS_TABLE_NAME || "stocks";
+const { productsTableName, stocksTableName } = dynamoDbConfigs;
 
 /**
  * Retrieves a product by product ID value from "products" and "stocks" tables
@@ -31,8 +30,13 @@ export const getProductById = async (id: string): Promise<Product | null> => {
   ]);
 
   if (!productsResult?.Items?.[0] || !stocksResult?.Item) {
+    console.warn(
+      `>>> Some item doesn't exist in either "${productsTableName}" or "${stocksTableName}" table`,
+    );
     return null;
   }
+
+  console.info(`>>> Successfully retrieved item by "${id}" product ID`);
 
   return {
     ...productsResult?.Items?.[0],

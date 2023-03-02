@@ -5,9 +5,11 @@
   "main": "serverless.ts",
   "scripts": {
     "deploy": "sls deploy",
+    "migrate": "ts-node ./src/integrations/dynamo-db/migration.ts",
     "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i",
     "invoke:getProductsList": "sls invoke local -f getProductsList",
-    "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"251c4dc1-7a08-4c65-85a2-f3632362cdbf\"}}'"
+    "invoke:getProductsById": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"f2e8da78-fa9d-4981-acf5-d4dc0741d881\"}}'",
+    "invoke:getProductsById2": "sls invoke local -f getProductsById --data '{\"pathParameters\": {\"productId\":\"251c4dc1-7a08-4c65-85a2-f3632362cdbf\"}}'"
   },
   "engines": {
     "node": ">=14.15.0"
