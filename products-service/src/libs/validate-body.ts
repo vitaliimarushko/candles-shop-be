@@ -15,14 +15,16 @@ export const validateBody = async (params: ValidateBodyParamsInterface) => {
   const { event, schema } = params;
   let requestData;
 
-  console.info(`>>> Incoming event body:`, JSON.stringify(event.body));
+  console.info(`>>> Incoming event:`, JSON.stringify(event));
 
   try {
-    requestData = await schema.validate(event.body);
+    requestData = await schema.validate(JSON.parse(event.body));
   } catch (error) {
+    const message = error.validationMessage || error.message || "Bad Request";
+    console.error(`>>> ${message}`);
     throw {
       statusCode: 400,
-      message: error.validationMessage || error.message || "Bad Request",
+      message,
     };
   }
 
