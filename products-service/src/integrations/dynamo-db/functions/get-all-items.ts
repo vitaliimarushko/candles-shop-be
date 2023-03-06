@@ -1,17 +1,16 @@
-import { Product } from "../models/Product";
 import { dynamoDbClient } from "../connection";
 
 /**
  * Retrieves all the existing products from "products" table
  *
- * @returns { Promise<Product[]> }
+ * @returns { Promise<T[]> }
  */
-export const getAllItems = async (tableName: string): Promise<Product[]> => {
+export const getAllItems = async <T>(tableName: string): Promise<T[]> => {
   const results = await dynamoDbClient.scan({ TableName: tableName }).promise();
 
   console.info(
     `>>> Retrieved ${results.Items.length} items from "${tableName}" table`,
   );
 
-  return results?.Items || [];
+  return (results?.Items as any) || [];
 };
