@@ -4,6 +4,7 @@
   "description": "",
   "main": "serverless.ts",
   "scripts": {
+    "start": "sls offline",
     "deploy": "sls deploy",
     "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i"
   },
@@ -24,6 +25,7 @@
     "npm-check-updates": "^16.7.10",
     "serverless": "^3.0.0",
     "serverless-esbuild": "^1.23.3",
+    "serverless-offline": "^12.0.4",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^4.1.3"

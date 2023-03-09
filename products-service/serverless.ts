@@ -6,7 +6,7 @@ import createProduct from "@functions/createProduct";
 module.exports = {
   service: "products-service",
   frameworkVersion: "3",
-  plugins: ["serverless-esbuild"],
+  plugins: ["serverless-esbuild", "serverless-offline"],
   provider: {
     name: "aws",
     runtime: "nodejs16.x",

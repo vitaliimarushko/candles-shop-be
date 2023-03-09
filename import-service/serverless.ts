@@ -8,7 +8,7 @@ const bucketName =
 module.exports = {
   service: "import-service",
   frameworkVersion: "3",
-  plugins: ["serverless-esbuild"],
+  plugins: ["serverless-esbuild", "serverless-offline"],
   provider: {
     name: "aws",
     runtime: "nodejs16.x",
@@ -48,4 +48,15 @@ module.exports = {
       concurrency: 10,
     },
   },
+  // resources: {
+  //   Resources: {
+  //     UploadBucket: {
+  //       Type: "AWS::S3::Bucket",
+  //       Properties: {
+  //         bucketName,
+  //         cors
+  //       },
+  //     },
+  //   },
+  // },
 } as AWS;
