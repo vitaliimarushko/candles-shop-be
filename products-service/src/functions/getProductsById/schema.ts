@@ -1,9 +1,9 @@
 import * as Yup from "yup";
 
-export const PathParametersSchema = Yup.object({
+export const RequestDataSchema = Yup.object({
   productId: Yup.string()
     .min(1, "Wrong product ID format")
     .required("Product ID is required"),
 });
 
-export type PathParameters = Yup.InferType<typeof PathParametersSchema>;
+export type RequestData = Yup.InferType<typeof RequestDataSchema>;

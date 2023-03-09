@@ -1,10 +1,12 @@
 import type { AWS } from "@serverless/typescript";
-import getProductsList from "@functions/getProductsList";
-import getProductsById from "@functions/getProductsById";
-import createProduct from "@functions/createProduct";
+import importProductsFile from "@functions/importProductsFile";
+
+const bucketName =
+  process.env.BUCKET_NAME ||
+  "import-service-62bb5153-ba0a-44b6-9c86-7978fe9fc394";
 
 module.exports = {
-  service: "products-service",
+  service: "import-service",
   frameworkVersion: "3",
   plugins: ["serverless-esbuild"],
   provider: {
@@ -18,16 +20,21 @@ module.exports = {
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1",
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
-      PRODUCTS_TABLE_NAME: process.env.PRODUCTS_TABLE_NAME || "products",
-      STOCKS_TABLE_NAME: process.env.STOCKS_TABLE_NAME || "stocks",
+      BUCKET_NAME: bucketName,
     },
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: ["s3:*"],
+        Resource: [
+          `arn:aws:s3:::${bucketName}`,
+          `arn:aws:s3:::${bucketName}/*`,
+        ],
+      },
+    ],
   },
   // import the function via paths
-  functions: {
-    getProductsList,
-    getProductsById,
-    createProduct,
-  },
+  functions: { importProductsFile },
   package: { individually: true },
   custom: {
     esbuild: {
