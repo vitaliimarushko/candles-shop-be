@@ -8,13 +8,10 @@ export const handlerTryCatch = (
     try {
       return await handler(event);
     } catch (error) {
-      return jsonResponse(
-        {
-          message:
-            error.message || error.validationMessage || "Internal server error",
-        },
-        error.statusCode || 500,
-      );
+      const message =
+        error.message || error.validationMessage || "Internal server error";
+      console.error(`>>> ${message}`);
+      return jsonResponse({ message }, error.statusCode || 500);
     }
   };
 };
