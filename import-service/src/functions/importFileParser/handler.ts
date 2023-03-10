@@ -1,4 +1,5 @@
 import { Readable } from "node:stream";
+import { basename } from "node:path";
 import { APIGatewayProxyResult, S3Event } from "aws-lambda";
 import { handlerTryCatch } from "@libs/handler-try-catch";
 import { jsonResponse } from "@libs/json-response";
@@ -24,6 +25,25 @@ const handleStream = (readableStream: Readable) => {
   });
 };
 
+const moveFileToParsed = async (fileKey: string) => {
+  const filename = basename(fileKey);
+
+  await s3Client
+    .copyObject({
+      Bucket: s3Configs.bucketName,
+      CopySource: `${s3Configs.bucketName}/${fileKey}`,
+      Key: `parsed/${filename}`,
+    })
+    .promise();
+
+  await s3Client
+    .deleteObject({
+      Bucket: s3Configs.bucketName,
+      Key: fileKey,
+    })
+    .promise();
+};
+
 export const main = handlerTryCatch(
   async (event: S3Event): Promise<APIGatewayProxyResult> => {
     const fileKey: string = event.Records[0]?.s3.object.key;
@@ -36,6 +56,8 @@ export const main = handlerTryCatch(
     const data = await handleStream(s3Stream);
 
     console.info(">>> All file data:", JSON.stringify(data));
+
+    await moveFileToParsed(fileKey);
 
     return jsonResponse({});
   },
