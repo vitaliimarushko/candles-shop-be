@@ -1,5 +1,6 @@
 import type { AWS } from "@serverless/typescript";
 import importProductsFile from "@functions/importProductsFile";
+import importFileParser from "@functions/importFileParser";
 
 const bucketName =
   process.env.BUCKET_NAME ||
@@ -34,7 +35,10 @@ module.exports = {
     ],
   },
   // import the function via paths
-  functions: { importProductsFile },
+  functions: {
+    importProductsFile,
+    importFileParser,
+  },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -48,15 +52,4 @@ module.exports = {
       concurrency: 10,
     },
   },
-  // resources: {
-  //   Resources: {
-  //     UploadBucket: {
-  //       Type: "AWS::S3::Bucket",
-  //       Properties: {
-  //         bucketName,
-  //         cors
-  //       },
-  //     },
-  //   },
-  // },
 } as AWS;

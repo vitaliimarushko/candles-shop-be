@@ -1,10 +1,16 @@
-import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
+import { APIGatewayProxyResult, APIGatewayEvent, S3Event } from "aws-lambda";
 import { jsonResponse } from "./json-response";
 
 export const handlerTryCatch = (
-  handler: (event: APIGatewayEvent) => Promise<APIGatewayProxyResult>,
+  handler: (
+    event: APIGatewayEvent | S3Event | void,
+  ) => Promise<APIGatewayProxyResult>,
 ) => {
-  return async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+  return async (
+    event: APIGatewayEvent | S3Event | void,
+  ): Promise<APIGatewayProxyResult> => {
+    console.info(`>>> Incoming event:`, JSON.stringify(event || ""));
+
     try {
       return await handler(event);
     } catch (error) {
