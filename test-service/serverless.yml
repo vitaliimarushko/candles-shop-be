@@ -1,0 +1,36 @@
+service: test-service
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+    sourcemap: false
+    exclude: [ "aws-sdk" ]
+    target: "node16"
+    platform: "node"
+    concurrency: 10
+  env: ${file(./.env.yml)}
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  region: eu-central-1
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  environment:
+    NODE_ENV: dev
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    NODE_OPTIONS: --enable-source-maps --stack-trace-limit=1000
+    PRODUCTS_TABLE_NAME: ${self:custom.env.PRODUCTS_TABLE_NAME}
+    STOCKS_TABLE_NAME: ${self:custom.env.STOCKS_TABLE_NAME}
+
+functions:
+  - ${file(./sls/functions.yml)}

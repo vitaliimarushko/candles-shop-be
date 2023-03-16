@@ -21,6 +21,31 @@ module.exports = {
       PRODUCTS_TABLE_NAME: process.env.PRODUCTS_TABLE_NAME || "products",
       STOCKS_TABLE_NAME: process.env.STOCKS_TABLE_NAME || "stocks",
     },
+    iamRoleStatements: [
+      {
+        Effect: "Allow",
+        Action: ["dynamoDb:*", "lambda:InvokeFunction"],
+        Resource: [
+          "arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-getProductsList",
+          "arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-getProductsById",
+          "arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-createProduct",
+          "arn:aws:dynamodb:eu-central-1:585535138615:table/products",
+          "arn:aws:dynamodb:eu-central-1:585535138615:table/stocks",
+        ],
+      },
+      {
+        Effect: "Allow",
+        Action: [
+          "logs:CreateLogStream",
+          "logs:CreateLogGroup",
+          "logs:TagResource",
+          "logs:PutLogEvents",
+        ],
+        Resource: [
+          "arn:aws:logs:eu-central-1:585535138615:log-group:/aws/lambda/products-service-dev*:*",
+        ],
+      },
+    ],
   },
   // import the function via paths
   functions: {

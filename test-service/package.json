@@ -1,0 +1,30 @@
+{
+  "name": "test-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "author": "Vitalii Marushko",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "16"
+  },
+  "scripts": {
+    "start": "sls offline",
+    "deploy": "sls deploy",
+    "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.7"
+  },
+  "devDependencies": {
+    "@serverless/typescript": "^3.27.0",
+    "@types/aws-lambda": "^8.10.113",
+    "@types/node": "^18.15.3",
+    "esbuild": "^0.17.11",
+    "npm-check-updates": "^16.7.12",
+    "serverless": "^3.28.1",
+    "serverless-esbuild": "^1.40.0",
+    "serverless-offline": "^12.0.4",
+    "typescript": "^4.9.5"
+  }
+}

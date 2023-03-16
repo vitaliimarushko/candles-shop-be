@@ -1,0 +1,7 @@
+getProductsList:
+  handler: src/functions/getProductsList/handler.main
+  events:
+    - http:
+        method: get
+        path: /products123
+        cors: true
