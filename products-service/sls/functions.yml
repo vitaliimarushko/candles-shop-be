@@ -21,3 +21,13 @@ createProduct:
         method: post
         path: /products
         cors: true
+
+catalogBatchProcess:
+  handler: src/functions/catalogBatchProcess/handler.main
+  events:
+    - sqs:
+        arn:
+          Fn::GetAtt:
+            - catalogItemsQueue
+            - Arn
+        batchSize: 5
