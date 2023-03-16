@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import { jsonResponse } from "@libs/json-response";
+import { jsonResponse } from "../../utils/helpers/json-response";
 import { getAllItems } from "../../integrations/dynamo-db";
 import { FullProduct } from "../../integrations/dynamo-db/models/FullProduct";
 import { Product } from "../../integrations/dynamo-db/models/Product";

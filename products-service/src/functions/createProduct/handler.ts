@@ -1,16 +1,13 @@
 import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
 import { v4 as uuidv4 } from "uuid";
-import {
-  RequestData,
-  RequestDataSchema,
-} from "@functions/createProduct/schema";
-import { handlerTryCatch } from "@libs/handler-try-catch";
-import { validateEvent } from "@libs/validate-event";
-import { jsonResponse } from "@libs/json-response";
+import { RequestData, RequestDataSchema } from "./schema";
+import { withTryCatch } from "../../middlewares/with-try-catch";
+import { jsonResponse } from "../../utils/helpers/json-response";
+import { validateEvent } from "../../utils/helpers/validate-event";
 import { insertProduct } from "../../integrations/dynamo-db";
 import { FullProduct } from "../../integrations/dynamo-db/models/FullProduct";
 
-export const main = handlerTryCatch(
+export const main = withTryCatch(
   async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
     const requestData: RequestData = await validateEvent({
       event,

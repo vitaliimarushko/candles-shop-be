@@ -22,7 +22,7 @@ coverage
 dist
 dist-ssr
 *.local
-.env.yml
+.env
 
 # Editor directories and files
 .vscode/*

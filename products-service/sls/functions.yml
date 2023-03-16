@@ -1,0 +1,23 @@
+getProductsList:
+  handler: src/functions/getProductsList/handler.main
+  events:
+    - http:
+        method: get
+        path: /products
+        cors: true
+
+getProductsById:
+  handler: src/functions/getProductsById/handler.main
+  events:
+    - http:
+        method: get
+        path: /products/{productId}
+        cors: true
+
+createProduct:
+  handler: src/functions/createProduct/handler.main
+  events:
+    - http:
+        method: post
+        path: /products
+        cors: true

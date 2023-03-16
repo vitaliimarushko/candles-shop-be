@@ -8,12 +8,14 @@ export const main: Handler = withTryCatch(
 
     const productsTable = process.env.PRODUCTS_TABLE_NAME;
     const stocksTable = process.env.STOCKS_TABLE_NAME;
+    const someVar = process.env.SOME_VAR;
 
     const allProducts = {
       a: 10,
       b: 20,
       productsTable,
       stocksTable,
+      someVar,
     };
 
     return jsonResponse(allProducts);
