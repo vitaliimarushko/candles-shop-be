@@ -4,23 +4,23 @@ import { APIGatewayProxyResult, S3Event } from "aws-lambda";
 import { withTryCatch } from "../../middlewares/with-try-catch";
 import { jsonResponse } from "../../utils/helpers/json-response";
 import { s3Client, s3Configs } from "../../integrations/s3";
+import { sendMessage } from "../../integrations/sqs";
+import { CreateProductType } from "./schema";
 
 const csv = require("csv-parser");
 
 const handleStream = (readableStream: Readable) => {
-  const data = [];
   return new Promise((resolve, reject) => {
     readableStream
       .pipe(csv())
-      .on("data", (chunk: Buffer) => {
-        console.info(">>> Chunk:", JSON.stringify(chunk));
-        data.push(chunk);
+      .on("data", async (chunk: CreateProductType) => {
+        await sendMessage(chunk);
       })
       .on("error", (error: any) => {
         reject(error?.message || error || "S3 file can't be read");
       })
       .on("end", () => {
-        resolve(data);
+        resolve(void 0);
       });
   });
 };
@@ -53,10 +53,8 @@ export const main = withTryCatch(
     };
 
     const s3Stream = s3Client.getObject(params).createReadStream();
-    const data = await handleStream(s3Stream);
 
-    console.info(">>> All file data:", JSON.stringify(data));
-
+    await handleStream(s3Stream);
     await moveFileToParsed(fileKey);
 
     return jsonResponse({});

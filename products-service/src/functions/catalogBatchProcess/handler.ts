@@ -29,12 +29,12 @@ export const main = withTryCatch(async (event: SQSEvent): Promise<void> => {
     };
 
     console.info(
-      `>>> New product is going to be inserted with "${idx}" index...`,
+      `>>> New product is going to be inserted...`,
       JSON.stringify(newFullProduct),
     );
 
     await insertProduct(newFullProduct);
 
-    console.info(`New product with "${idx}" index was inserted successfully!`);
+    console.info(`New product was inserted successfully!`);
   }
 });
