@@ -1,7 +1,7 @@
 import { APIGatewayProxyResult } from "aws-lambda";
 
 export const jsonResponse = (
-  body: Record<string, any>,
+  body: any,
   statusCode = 200,
 ): APIGatewayProxyResult => {
   return {

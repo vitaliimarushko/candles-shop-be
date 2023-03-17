@@ -1,11 +1,11 @@
 import { APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
-import { handlerTryCatch } from "@libs/handler-try-catch";
-import { validateEvent } from "@libs/validate-event";
+import { withTryCatch } from "../../middlewares/with-try-catch";
+import { validateEvent } from "../../utils/helpers/validate-event";
 import { RequestBody, RequestDataSchema } from "./schema";
 import { createSignedUrl } from "../../integrations/s3";
-import { jsonResponse } from "@libs/json-response";
+import { jsonResponse } from "../../utils/helpers/json-response";
 
-export const main = handlerTryCatch(
+export const main = withTryCatch(
   async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
     const requestBody: RequestBody = await validateEvent({
       event,
