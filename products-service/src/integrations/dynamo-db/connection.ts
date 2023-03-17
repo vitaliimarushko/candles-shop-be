@@ -1,13 +1,15 @@
 import * as AWS from "aws-sdk";
 
+const region = process.env.AWS_REGION;
+
 export const dynamoDbConfigs = {
-  region: process.env.AWS_REGION || "en-central-1",
-  productsTableName: process.env.PRODUCTS_TABLE_NAME || "products",
-  stocksTableName: process.env.STOCKS_TABLE_NAME || "stocks",
+  region,
+  productsTableName: process.env.PRODUCTS_TABLE_NAME,
+  stocksTableName: process.env.STOCKS_TABLE_NAME,
 };
 
 AWS.config.update({
-  region: dynamoDbConfigs.region,
+  region,
 });
 
 export const dynamoDbClient = new AWS.DynamoDB.DocumentClient();

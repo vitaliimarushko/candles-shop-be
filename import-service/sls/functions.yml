@@ -1,0 +1,17 @@
+importFileParser:
+  handler: src/functions/importFileParser/handler.main
+  events:
+    - s3:
+        bucket: ${env:BUCKET_NAME}
+        event: "s3:ObjectCreated:*"
+        rules:
+          - prefix: uploaded/
+        existing: true
+
+importProductsFile:
+  handler: src/functions/importProductsFile/handler.main
+  events:
+    - http:
+        method: get
+        path: /import
+        cors: true

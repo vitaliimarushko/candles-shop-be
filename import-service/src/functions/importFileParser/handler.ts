@@ -1,8 +1,8 @@
 import { Readable } from "node:stream";
 import { basename } from "node:path";
 import { APIGatewayProxyResult, S3Event } from "aws-lambda";
-import { handlerTryCatch } from "@libs/handler-try-catch";
-import { jsonResponse } from "@libs/json-response";
+import { withTryCatch } from "../../middlewares/with-try-catch";
+import { jsonResponse } from "../../utils/helpers/json-response";
 import { s3Client, s3Configs } from "../../integrations/s3";
 
 const csv = require("csv-parser");
@@ -44,7 +44,7 @@ const moveFileToParsed = async (fileKey: string) => {
     .promise();
 };
 
-export const main = handlerTryCatch(
+export const main = withTryCatch(
   async (event: S3Event): Promise<APIGatewayProxyResult> => {
     const fileKey: string = event.Records[0]?.s3.object.key;
     const params = {

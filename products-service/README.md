@@ -2,9 +2,9 @@
 
 ### Endpoints
 
-- GET - https://9hhpsvckda.execute-api.eu-central-1.amazonaws.com/dev/products
-- GET - https://9hhpsvckda.execute-api.eu-central-1.amazonaws.com/dev/products/{productId}
-- POST - https://9hhpsvckda.execute-api.eu-central-1.amazonaws.com/dev/products
+- GET - https://hc08gg77a8.execute-api.eu-central-1.amazonaws.com/dev/products
+- GET - https://hc08gg77a8.execute-api.eu-central-1.amazonaws.com/dev/products/{productId}
+- POST - https://hc08gg77a8.execute-api.eu-central-1.amazonaws.com/dev/products
 
 ## Using service locally
 
