@@ -3,3 +3,14 @@ Resources:
     Type: AWS::SQS::Queue
     Properties:
       QueueName: catalogItemsQueue
+  createProductTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: createProductTopic
+  createProductSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Endpoint: ${env:SNS_EMAIL_ENDPOINT}
+      Protocol: email
+      TopicArn:
+        Ref: createProductTopic

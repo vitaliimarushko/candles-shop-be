@@ -4,9 +4,11 @@ import { withTryCatch } from "../../middlewares/with-try-catch";
 import { RequestData, RequestDataSchema } from "../createProduct/schema";
 import { FullProduct } from "../../integrations/dynamo-db/models/FullProduct";
 import { insertProduct } from "../../integrations/dynamo-db";
+import { publishToSns } from "../../integrations/sns";
 
 export const main = withTryCatch(async (event: SQSEvent): Promise<void> => {
   const records = event.Records;
+  const allProducts = [];
 
   for (const idx in records) {
     const { body } = records[idx];
@@ -28,6 +30,8 @@ export const main = withTryCatch(async (event: SQSEvent): Promise<void> => {
       count: parsedData.count || 0,
     };
 
+    allProducts.push(newFullProduct);
+
     console.info(
       `>>> New product is going to be inserted...`,
       JSON.stringify(newFullProduct),
@@ -37,4 +41,8 @@ export const main = withTryCatch(async (event: SQSEvent): Promise<void> => {
 
     console.info(`New product was inserted successfully!`);
   }
+
+  await publishToSns(allProducts);
+
+  console.info(">>> All inserted products", allProducts);
 });

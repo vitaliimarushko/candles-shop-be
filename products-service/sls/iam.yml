@@ -18,3 +18,8 @@ role:
         - logs:PutLogEvents
       Resource:
         - arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/products-service-dev*:*
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource:
+        - Ref: createProductTopic
