@@ -5,11 +5,11 @@ role:
         - dynamoDb:*
         - lambda:InvokeFunction
       Resource:
-        - arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-getProductsList
-        - arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-getProductsById
-        - arn:aws:lambda:eu-central-1:585535138615:function:products-service-dev-createProduct
-        - arn:aws:dynamodb:eu-central-1:585535138615:table/products
-        - arn:aws:dynamodb:eu-central-1:585535138615:table/stocks
+        - arn:aws:lambda:${aws:region}:${aws:accountId}:function:products-service-dev-getProductsList
+        - arn:aws:lambda:${aws:region}:${aws:accountId}:function:products-service-dev-getProductsById
+        - arn:aws:lambda:${aws:region}:${aws:accountId}:function:products-service-dev-createProduct
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/products
+        - arn:aws:dynamodb:${aws:region}:${aws:accountId}:table/stocks
     - Effect: Allow
       Action:
         - logs:CreateLogStream
@@ -17,4 +17,9 @@ role:
         - logs:TagResource
         - logs:PutLogEvents
       Resource:
-        - arn:aws:logs:eu-central-1:585535138615:log-group:/aws/lambda/products-service-dev*:*
+        - arn:aws:logs:${aws:region}:${aws:accountId}:log-group:/aws/lambda/products-service-dev*:*
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource:
+        - Ref: createProductTopic
