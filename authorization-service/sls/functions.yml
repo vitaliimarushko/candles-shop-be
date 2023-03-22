@@ -1,0 +1,7 @@
+basicAuthorizer:
+  handler: src/functions/basicAuthorizer/handler.main
+  events:
+    - http:
+        method: get
+        path: /auth/basic
+        cors: true
