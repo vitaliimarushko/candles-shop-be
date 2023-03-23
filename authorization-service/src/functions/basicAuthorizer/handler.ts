@@ -1,6 +1,6 @@
-import { APIGatewayRequestAuthorizerEvent } from "aws-lambda";
+import { APIGatewayTokenAuthorizerEvent } from "aws-lambda";
 import { withTryCatch } from "../../middlewares/with-try-catch";
-import { jsonResponse } from "../../utils/helpers/json-response";
+import { generatePolicy } from "../../utils/helpers/generate-policy";
 
 const GITHUB_ACCOUNT_NAME = process.env.GITHUB_ACCOUNT_NAME;
 const PASSWORD_STRING = process.env.PASSWORD_STRING;
@@ -10,25 +10,27 @@ const basicToken = Buffer.from(
 ).toString("base64");
 
 export const main = withTryCatch(
-  async (event: APIGatewayRequestAuthorizerEvent) => {
-    const authorizationHeader = event.headers.Authorization;
+  async (event: APIGatewayTokenAuthorizerEvent) => {
+    const authorizationHeader = event.authorizationToken;
 
     if (!authorizationHeader?.startsWith("Basic ")) {
       throw {
         statusCode: 401,
-        message: "Authorization header is wrong or not provided",
+        message: "Unauthorized",
       };
     }
 
     if (basicToken !== authorizationHeader.split("Basic ")?.[1]) {
       throw {
         statusCode: 403,
-        message: "Wrong credentials",
+        message: "Forbidden",
       };
     }
 
-    return jsonResponse({
-      isAuthorized: true,
+    return generatePolicy({
+      principalId: basicToken,
+      resource: event.methodArn,
+      effect: "Allow",
     });
   },
 );
