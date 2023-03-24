@@ -1,7 +1,7 @@
 interface GeneratePolicyParamsInterface {
   principalId: string;
   resource: string | string[];
-  effect: string;
+  effect: "Allow" | "Deny";
 }
 
 interface GeneratePolicyPReturnInterface {
@@ -9,7 +9,7 @@ interface GeneratePolicyPReturnInterface {
   policyDocument: {
     Version: "2012-10-17";
     Statement: {
-      Action: "execute-api:Invoke";
+      Action: string;
       Effect: string;
       Resource: string | string[];
     }[];
