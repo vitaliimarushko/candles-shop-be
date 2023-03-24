@@ -24,8 +24,6 @@ provider:
     NODE_OPTIONS: --enable-source-maps --stack-trace-limit=1000
     GITHUB_ACCOUNT_NAME: ${env:GITHUB_ACCOUNT_NAME}
     PASSWORD_STRING: ${env:PASSWORD_STRING}
-#  iam:
-#    role: ${file(./sls/iam.yml):role}
 
 custom:
   esbuild:
@@ -39,6 +37,3 @@ custom:
 
 functions:
   - ${file(./sls/functions.yml)}
-
-resources:
-  - ${file(./sls/resources.yml)}

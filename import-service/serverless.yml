@@ -39,3 +39,6 @@ custom:
 
 functions:
   - ${file(./sls/functions.yml)}
+
+resources:
+  - ${file(./sls/resources.yml)}
