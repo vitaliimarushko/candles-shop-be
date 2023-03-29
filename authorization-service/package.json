@@ -1,0 +1,32 @@
+{
+  "name": "authorization-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "author": "Vitalii Marushko",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": "16"
+  },
+  "scripts": {
+    "start": "sls offline",
+    "deploy": "sls deploy",
+    "upgrade": "ncu -u && npm i && npm prune && npm audit fix && npm i && npm prune"
+  },
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1341.0",
+    "yup": "^1.0.2"
+  },
+  "devDependencies": {
+    "@serverless/typescript": "^3.27.0",
+    "@types/aws-lambda": "^8.10.114",
+    "@types/node": "^18.15.5",
+    "esbuild": "^0.17.12",
+    "npm-check-updates": "^16.7.13",
+    "serverless": "^3.28.1",
+    "serverless-esbuild": "^1.42.0",
+    "serverless-offline": "^12.0.4",
+    "typescript": "^5.0.2"
+  }
+}

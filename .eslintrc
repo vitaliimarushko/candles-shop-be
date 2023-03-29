@@ -5,6 +5,7 @@
     "project": [
       "./products-service/tsconfig.json",
       "./import-service/tsconfig.json",
+      "./authorization-service/tsconfig.json",
       "./test-service/tsconfig.json"
     ]
   },

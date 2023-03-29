@@ -1,0 +1,2 @@
+basicAuthorizer:
+  handler: src/functions/basicAuthorizer/handler.main

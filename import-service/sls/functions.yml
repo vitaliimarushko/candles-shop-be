@@ -15,3 +15,9 @@ importProductsFile:
         method: get
         path: /import
         cors: true
+        authorizer:
+          name: basicAuthorizer
+          arn: arn:aws:lambda:${aws:region}:${aws:accountId}:function:authorization-service-dev-basicAuthorizer
+          resultTtlInSeconds: 0
+          type: token
+          identitySource: method.request.header.Authorization

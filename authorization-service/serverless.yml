@@ -1,4 +1,4 @@
-service: import-service
+service: authorization-service
 frameworkVersion: '3'
 useDotenv: true
 
@@ -22,10 +22,8 @@ provider:
     NODE_ENV: dev
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     NODE_OPTIONS: --enable-source-maps --stack-trace-limit=1000
-    BUCKET_NAME: ${env:BUCKET_NAME}
-    CATALOG_ITEMS_QUEUE: ${env:CATALOG_ITEMS_QUEUE}
-  iam:
-    role: ${file(./sls/iam.yml):role}
+    GITHUB_ACCOUNT_NAME: ${env:GITHUB_ACCOUNT_NAME}
+    PASSWORD_STRING: ${env:PASSWORD_STRING}
 
 custom:
   esbuild:
@@ -39,6 +37,3 @@ custom:
 
 functions:
   - ${file(./sls/functions.yml)}
-
-resources:
-  - ${file(./sls/resources.yml)}
