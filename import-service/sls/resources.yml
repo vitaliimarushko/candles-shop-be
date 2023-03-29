@@ -9,3 +9,19 @@ Resources:
       ResponseType: DEFAULT_4XX
       RestApiId:
         Ref: "ApiGatewayRestApi"
+  UploadBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:provider.environment.BUCKET_NAME}
+      AccessControl: PublicReadWrite
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - HEAD
+            AllowedOrigins:
+              - "*"
+            AllowedHeaders:
+              - "*"
